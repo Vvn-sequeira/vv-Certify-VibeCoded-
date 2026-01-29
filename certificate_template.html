@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - St. Aloysius (Deemed to be University)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Text:wght@400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: linear-gradient(135deg, #f5f5dc 0%, #e8e8d0 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .certificate-container {
+            width: 1056px;
+            height: 816px;
+            background: linear-gradient(to bottom, #fffef8 0%, #faf9f0 100%);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+        }
+        
+        /* Ornate Border */
+        .certificate-border {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            right: 30px;
+            bottom: 30px;
+            border: 3px solid #c9a961;
+            box-shadow: inset 0 0 0 2px #d4af37, inset 0 0 0 5px #fffef8;
+        }
+        
+        .certificate-border::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border: 1px solid #d4af37;
+        }
+        
+        /* Corner Decorations */
+        .corner {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: 
+                linear-gradient(45deg, transparent 40%, #d4af37 40%, #d4af37 60%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, #d4af37 40%, #d4af37 60%, transparent 60%);
+            opacity: 0.3;
+        }
+        
+        .corner-tl {
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at top left, #d4af37 0%, transparent 70%);
+        }
+        
+        .corner-tr {
+            top: 0;
+            right: 0;
+            background: radial-gradient(circle at top right, #d4af37 0%, transparent 70%);
+        }
+        
+        .corner-bl {
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at bottom left, #d4af37 0%, transparent 70%);
+        }
+        
+        .corner-br {
+            bottom: 0;
+            right: 0;
+            background: radial-gradient(circle at bottom right, #d4af37 0%, transparent 70%);
+        }
+        
+        /* Decorative Pattern Border */
+        .pattern-border {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid #c9a961;
+            border-style: double;
+            pointer-events: none;
+        }
+        
+        /* Content */
+        .certificate-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding-top: 20px;
+        }
+        
+        .university-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #2c2416;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+        
+        .decorative-line {
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            margin: 15px auto;
+            position: relative;
+        }
+        
+        .decorative-line::before,
+        .decorative-line::after {
+            content: '❖';
+            position: absolute;
+            color: #d4af37;
+            font-size: 12px;
+            top: -7px;
+        }
+        
+        .decorative-line::before {
+            left: -20px;
+        }
+        
+        .decorative-line::after {
+            right: -20px;
+        }
+        
+        .certificate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a1410;
+            margin: 20px 0 40px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .certificate-body {
+            font-size: 24px;
+            color: #3a3a3a;
+            line-height: 2.5;
+            margin: 40px auto;
+            max-width: 700px;
+        }
+        
+        .recipient-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1410;
+            border-bottom: 2px solid #d4af37;
+            display: inline-block;
+            padding: 0 40px 5px;
+            margin: 0 10px;
+        }
+        
+        .course-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2c2416;
+            border-bottom: 2px solid #d4af37;
+            display: inline-block;
+            padding: 0 30px 5px;
+            margin: 0 10px;
+        }
+        
+        .date {
+            font-size: 22px;
+            color: #3a3a3a;
+            display: inline-block;
+            border-bottom: 1px solid #d4af37;
+            padding: 0 20px 3px;
+            margin: 0 10px;
+        }
+        
+        /* University Seal */
+        .seal {
+            position: absolute;
+            left: 80px;
+            bottom: 120px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #d4af37;
+            background: radial-gradient(circle, #fffef8 0%, #f0ede0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0.4;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .seal-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #2c2416;
+            text-align: center;
+            line-height: 1.2;
+            padding: 10px;
+        }
+        
+        .seal-inner {
+            width: 90px;
+            height: 90px;
+            border: 2px solid #c9a961;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Signatures */
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 80px;
+            padding: 0 100px;
+        }
+        
+        .signature-block {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .signature-line {
+            width: 250px;
+            height: 2px;
+            background: #2c2416;
+            margin: 0 auto 10px;
+        }
+        
+        .signature-label {
+            font-size: 18px;
+            color: #3a3a3a;
+            font-weight: 600;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .certificate-container {
+                box-shadow: none;
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <!-- Decorative Borders -->
+        <div class="certificate-border">
+            <div class="corner corner-tl"></div>
+            <div class="corner corner-tr"></div>
+            <div class="corner corner-bl"></div>
+            <div class="corner corner-br"></div>
+        </div>
+        <div class="pattern-border"></div>
+        
+        <!-- University Seal -->
+        <div class="seal">
+            <div class="seal-inner">
+                <div class="seal-text">ST. ALOYSIUS<br>UNIVERSITY<br>SEAL</div>
+            </div>
+        </div>
+        
+        <!-- Certificate Content -->
+        <div class="certificate-content">
+            <h1 class="university-name">St. Aloysius (Deemed to be University)</h1>
+            <div class="decorative-line"></div>
+            <h2 class="certificate-title">Certificate of Achievement</h2>
+            
+            <div class="certificate-body">
+                <p>This is to certify that</p>
+                <p><span class="recipient-name">{{Name}}</span></p>
+                <p>has successfully completed</p>
+                <p><span class="course-name">{{Event}}</span></p>
+                <p>with <span class="course-name">{{Position}}</span></p>
+                <p>Register Number: <span class="date">{{RegisterNumber}}</span></p>
+            </div>
+            
+            <div class="signatures">
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <p class="signature-label">Director Signature</p>
+                </div>
+                <div class="signature-block">
+                    <div class="signature-line"></div>
+                    <p class="signature-label">Principal Signature</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

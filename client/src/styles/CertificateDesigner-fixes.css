@@ -1,0 +1,100 @@
+/* Certificate Designer Styles - CLEAN VERSION */
+
+/* Remove all the broken responsive styles */
+.field-list-sidebar {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.field-list-sidebar.open {
+  left: auto !important;
+}
+
+.field-list-sidebar::before {
+  display: none !important;
+}
+
+/* Fix desktop layout */
+@media (min-width: 1025px) {
+  .designer-container {
+    grid-template-columns: 250px 1fr 320px !important;
+  }
+  
+  .sidebar-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* Tablet layout */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .designer-container {
+    grid-template-columns: 250px 1fr 300px !important;
+  }
+  
+  .sidebar-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .sidebar-toggle-btn {
+    display: block !important;
+    position: fixed;
+    top: 80px;
+    left: 0.5rem;
+    z-index: 150;
+  }
+  
+  .field-list-sidebar {
+    position: fixed !important;
+    left: -100% !important;
+    top: 80px;
+    bottom: 0;
+    width: 260px !important;
+    z-index: 100;
+    transition: left 0.3s ease !important;
+    box-shadow: 5px 0 20px rgba(0, 0, 0, 0.5) !important;
+  }
+  
+  .field-list-sidebar.open {
+    left: 0 !important;
+  }
+  
+  .designer-container {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .field-properties-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    right: auto !important;
+    margin-top: 1rem;
+  }
+}
+
+/* Better text field visibility */
+.draggable-text-field {
+  min-width: 100px !important;
+  min-height: 35px !important;
+  padding: 0.6rem !important;
+  border-width: 2px !important;
+}
+
+.text-field-content {
+  font-size: 14px !important;
+  min-height: 20px !important;
+  padding: 4px 6px !important;
+}
+
+/* Smooth dragging */
+.react-draggable-dragging {
+  opacity: 0.95;
+  z-index: 1000;
+}

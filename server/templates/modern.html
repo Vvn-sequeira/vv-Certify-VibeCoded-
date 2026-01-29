@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate - Modern</title>
+    <style>
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 297mm;
+            height: 210mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #1a1a1a;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            flex-direction: row;
+        }
+        .left-bar {
+            width: 80px;
+            height: 100%;
+            background: #2d3436;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .stripes {
+            width: 40%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .stripe {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .college-name {
+            font-size: 24px;
+            color: #636e72;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 56px;
+            margin: 0;
+            color: #2d3436;
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+        .award-text {
+            font-size: 18px;
+            color: #636e72;
+            margin-top: 20px;
+        }
+        .recipient {
+            font-size: 48px;
+            color: #0984e3;
+            font-weight: bold;
+            margin: 30px 0;
+            border-bottom: 3px solid #0984e3;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .course-text {
+            font-size: 22px;
+            line-height: 1.5;
+        }
+        .footer {
+            margin-top: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .date h3, .signature h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #b2bec3;
+            margin: 0 0 5px 0;
+        }
+        .date p {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .signature-img {
+            max-height: 50px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .signature-line {
+            width: 200px;
+            height: 2px;
+            background: #2d3436;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-bar">
+            <div class="stripes">
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+                <div class="stripe"></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="college-name">{{CollegeName}}</div>
+                <h1>Certificate of Completion</h1>
+                <div class="award-text">This certificate is proudly presented to</div>
+            </div>
+            
+            <div class="recipient">{{Name}}</div>
+            
+            <div class="course-text">
+                For successfully completing the course <strong>{{Course}}</strong>.
+            </div>
+            
+            <div class="footer">
+                <div class="date">
+                    <h3>Date Issued</h3>
+                    <p>{{Date}}</p>
+                </div>
+                <div class="signature">
+                    {{Signature}}
+                    <div class="signature-line"></div>
+                    <h3>Instructor Signature</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
