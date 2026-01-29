@@ -150,8 +150,9 @@ function CertificateDesigner() {
         }));
         formData.append('csvFile', csvFile);
 
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
         try {
-            const response = await fetch('http://localhost:3000/api/generate-visual', {
+            const response = await fetch(`${API_URL}/api/generate-visual`, {
                 method: 'POST',
                 body: formData,
             });
