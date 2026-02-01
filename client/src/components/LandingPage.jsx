@@ -161,12 +161,6 @@ const LandingPage = () => {
                     Start Designing
                 </button>
 
-                {/* Social Links inside Card */}
-                <div className="social-links">
-                    <a href="https://www.linkedin.com/in/vivian-sequeira" target="_blank" rel="noopener noreferrer" className="social-link">LinkedIn</a>
-                    <a href="https://github.com/Vvn-sequeira" target="_blank" rel="noopener noreferrer" className="social-link">GitHub</a>
-                    <a href="https://www.instagram.com/v_v_n_sequeira/" target="_blank" rel="noopener noreferrer" className="social-link">Instagram</a>
-                </div>
             </div>
         </div>
     );
