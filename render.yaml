@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: vv-certify-backend
+    env: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PUPPETEER_CACHE_DIR
+        value: /opt/render/project/puppeteer
