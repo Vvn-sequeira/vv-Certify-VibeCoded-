@@ -1,0 +1,219 @@
+/* Base Reset */
+.landing-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #000000; /* Pure Black */
+    overflow: hidden;
+    color: #ffffff;
+    font-family: 'Outfit', 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    cursor: default; /* Should override any text cursor if needed */
+}
+
+/* Green Glow Background */
+.glow-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.6;
+    animation: pulseGlow 8s infinite alternate;
+}
+
+.orb-1 {
+    top: -20%;
+    left: -20%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(0, 255, 163, 0.15), transparent 70%); /* Fancy Green 1 */
+}
+
+.orb-2 {
+    bottom: -20%;
+    right: -20%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.2), transparent 70%); /* Emerald */
+}
+
+.orb-3 {
+    top: 40%;
+    left: 40%;
+    width: 30vw;
+    height: 30vw;
+    background: radial-gradient(circle, rgba(0, 255, 127, 0.1), transparent 70%); /* Spring Green */
+    animation-duration: 5s;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.1); opacity: 0.7; }
+}
+
+/* Glass Card Container */
+.hero-glass-card {
+    position: relative;
+    z-index: 10;
+    padding: 5rem 7rem;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 255, 163, 0.15); /* Subtle green border */
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(0, 255, 163, 0.05); /* Green Glow */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    width: 90%;
+    /* Will be animated by GSAP */
+}
+
+/* Typography */
+.hero-title {
+    font-size: 7rem;
+    line-height: 1;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -4px;
+    color: #ffffff;
+    /* Gradient Text */
+    background: linear-gradient(135deg, #ffffff 40%, #00ffa3 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 40px rgba(0, 255, 163, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: #a3a3a3;
+    font-weight: 400;
+    margin-bottom: 4rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-left: 2px solid #00ffa3; /* Green Accent Line */
+    padding-left: 1rem;
+}
+
+/* Fancy Green Button */
+.btn-fancy-green {
+    position: relative;
+    padding: 1.2rem 4rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #000000;
+    background: #00ffa3; /* Neon Green */
+    border: none;
+    border-radius: 4px; /* Sharper corners for modern look */
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(0, 255, 163, 0.5);
+}
+
+.btn-fancy-green::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transition: left 0.5s;
+}
+
+.btn-fancy-green:hover {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 40px rgba(0, 255, 163, 0.8);
+    transform: scale(1.02);
+}
+
+.btn-fancy-green:hover::before {
+    left: 100%;
+}
+
+/* Floating Elements (Visual Interest) */
+.floating-element {
+    position: absolute;
+    border: 1px solid rgba(0, 255, 163, 0.2);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.square-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    left: 20%;
+    transform: rotate(45deg);
+}
+
+.square-2 {
+    width: 60px;
+    height: 60px;
+    bottom: 30%;
+    right: 25%;
+    transform: rotate(15deg);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-glass-card {
+        padding: 3rem 2rem;
+    }
+    .hero-title {
+        font-size: 4rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Social Links Bar */
+.social-links {
+    position: relative;
+    /* bottom, left, transform removed */
+    display: flex;
+    gap: 2rem;
+    z-index: 20;
+    margin-top: 3rem;
+}
+
+.social-link {
+    color: #a3a3a3;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+}
+
+.social-link:hover {
+    color: #00ffa3;
+    text-shadow: 0 0 10px rgba(0, 255, 163, 0.5);
+    border-bottom-color: #00ffa3;
+    transform: translateY(-2px);
+}

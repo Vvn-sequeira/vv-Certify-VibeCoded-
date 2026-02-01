@@ -15,6 +15,18 @@ function FieldPropertiesPanel({ field, csvColumns, onUpdateField, onDeleteField 
         'Roboto',
         'Open Sans',
         'Lato',
+        'Montserrat',
+        'Poppins',
+        'Oswald',
+        'Raleway',
+        'Merriweather',
+        'Lora',
+        'Inter',
+        'Dancing Script',
+        'Great Vibes',
+        'Pinyon Script',
+        'Cinzel',
+        'Alex Brush'
     ];
 
     return (
@@ -72,17 +84,29 @@ function FieldPropertiesPanel({ field, csvColumns, onUpdateField, onDeleteField 
 
                 {/* Font Family */}
                 <div className="form-group">
-                    <label>Font Family</label>
+                    <label>Font Family & Style</label>
                     <select
-                        value={field.style.fontFamily}
-                        onChange={(e) => onUpdateField({
-                            style: { ...field.style, fontFamily: e.target.value }
-                        })}
+                        value={`${field.style.fontFamily}|${field.style.fontStyle}`}
+                        onChange={(e) => {
+                            const [family, style] = e.target.value.split('|');
+                            onUpdateField({
+                                style: {
+                                    ...field.style,
+                                    fontFamily: family,
+                                    fontStyle: style
+                                }
+                            });
+                        }}
                     >
                         {fonts.map(font => (
-                            <option key={font} value={font} style={{ fontFamily: font }}>
-                                {font}
-                            </option>
+                            <>
+                                <option key={`${font}|normal`} value={`${font}|normal`} style={{ fontFamily: font, fontStyle: 'normal' }}>
+                                    {font}
+                                </option>
+                                <option key={`${font}|italic`} value={`${font}|italic`} style={{ fontFamily: font, fontStyle: 'italic' }}>
+                                    {font} (Italic)
+                                </option>
+                            </>
                         ))}
                     </select>
                 </div>
@@ -103,32 +127,26 @@ function FieldPropertiesPanel({ field, csvColumns, onUpdateField, onDeleteField 
 
                 {/* Font Weight */}
                 <div className="form-group">
-                    <label>Font Weight</label>
-                    <select
-                        value={field.style.fontWeight}
-                        onChange={(e) => onUpdateField({
-                            style: { ...field.style, fontWeight: e.target.value }
-                        })}
-                    >
-                        <option value="normal">Normal</option>
-                        <option value="bold">Bold</option>
-                        <option value="lighter">Light</option>
-                    </select>
+                    <label>Font Weight: {field.style.fontWeight}</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <input
+                            type="range"
+                            min="100"
+                            max="900"
+                            step="100"
+                            value={field.style.fontWeight === 'bold' ? 700 : field.style.fontWeight === 'normal' ? 400 : field.style.fontWeight}
+                            onChange={(e) => onUpdateField({
+                                style: { ...field.style, fontWeight: parseInt(e.target.value) }
+                            })}
+                            style={{ flex: 1 }}
+                        />
+                        <span style={{ minWidth: '30px', textAlign: 'right', fontSize: '0.9rem', color: '#666' }}>
+                            {field.style.fontWeight}
+                        </span>
+                    </div>
                 </div>
 
-                {/* Font Style */}
-                <div className="form-group">
-                    <label>Font Style</label>
-                    <select
-                        value={field.style.fontStyle}
-                        onChange={(e) => onUpdateField({
-                            style: { ...field.style, fontStyle: e.target.value }
-                        })}
-                    >
-                        <option value="normal">Normal</option>
-                        <option value="italic">Italic</option>
-                    </select>
-                </div>
+
 
                 {/* Text Color */}
                 <div className="form-group">
@@ -158,23 +176,7 @@ function FieldPropertiesPanel({ field, csvColumns, onUpdateField, onDeleteField 
                     </div>
                 </div>
 
-                {/* Text Alignment */}
-                <div className="form-group">
-                    <label>Text Alignment</label>
-                    <div className="button-group">
-                        {['left', 'center', 'right'].map(align => (
-                            <button
-                                key={align}
-                                className={`btn-option ${field.style.textAlign === align ? 'active' : ''}`}
-                                onClick={() => onUpdateField({
-                                    style: { ...field.style, textAlign: align }
-                                })}
-                            >
-                                {align === 'left' ? '⬅️' : align === 'center' ? '↔️' : '➡️'}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+
 
                 {/* Text Transform */}
                 <div className="form-group">

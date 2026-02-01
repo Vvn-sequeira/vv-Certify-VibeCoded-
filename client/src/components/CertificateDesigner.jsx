@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ImageUploader from './ImageUploader';
 import DesignCanvas from './DesignCanvas';
 import FieldPropertiesPanel from './FieldPropertiesPanel';
@@ -28,7 +28,62 @@ function CertificateDesigner() {
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
     const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
+    const [snackbar, setSnackbar] = useState({ open: false, message: '', type: 'info', onConfirm: null, action: null });
     const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
+    const snackbarTimer = useRef(null);
+
+    // Helper to show snackbar with auto-dismiss management
+    const showSnackbar = ({ message, type = 'info', duration = 4000, onConfirm = null, action = null }) => {
+        if (snackbarTimer.current) {
+            clearTimeout(snackbarTimer.current);
+            snackbarTimer.current = null;
+        }
+
+        setSnackbar({ open: true, message, type, onConfirm, action });
+
+        if (type !== 'confirm' && duration !== 0) {
+            snackbarTimer.current = setTimeout(() => {
+                setSnackbar(prev => ({ ...prev, open: false }));
+            }, duration);
+        }
+    };
+
+    // Keep stateRef updated for timeout callbacks
+    const stateRef = useRef({ fields, csvFile });
+    useEffect(() => {
+        stateRef.current = { fields, csvFile };
+    });
+
+    // Show suggestion snackbar 3 seconds after image upload
+    useEffect(() => {
+        if (imageDataUrl) {
+            const timer = setTimeout(() => {
+                // Check if user still hasn't uploaded CSV or added many fields
+                if (stateRef.current.fields.length === 0 && !stateRef.current.csvFile) {
+                    showSnackbar({
+                        message: '💡 Suggestion: Upload a CSV file first!',
+                        type: 'info',
+                        duration: 0,
+                        action: (
+                            <a href="/sample_students.csv" download className="btn-download-sample" style={{ marginLeft: '10px', color: '#fff', textDecoration: 'underline', fontSize: '0.85rem' }}>
+                                📥 Download Sample
+                            </a>
+                        )
+                    });
+                }
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [imageDataUrl]);
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (snackbarTimer.current) {
+                clearTimeout(snackbarTimer.current);
+            }
+        };
+    }, []);
 
     // Handle image upload
     const handleImageUpload = (file) => {
@@ -50,11 +105,6 @@ function CertificateDesigner() {
     const addTextField = (position) => {
         try {
             console.log('Adding text field at position:', position);
-
-            // Alert user to upload CSV first if this is the first field and no CSV is present
-            if (fields.length === 0 && !csvFile) {
-                alert("💡 Suggestion: Upload a CSV file first!\n\nThis will allow you to generate certificates for multiple students automatically.\n\nClick OK to continue with a manual text field.");
-            }
 
             // Ensure position has valid coordinates
             // If no position provided, center it on the image
@@ -302,6 +352,30 @@ function CertificateDesigner() {
                                     {loading ? 'Generating...' : '🎓 Generate All Certificates'}
                                 </button>
 
+                                <button
+                                    className="btn-text btn-reset"
+                                    onClick={() => {
+                                        showSnackbar({
+                                            message: '⚠️ Are you sure you want to reset? This will clear everything.',
+                                            type: 'confirm',
+                                            onConfirm: () => {
+                                                setCertificateImage(null);
+                                                setImageDataUrl(null);
+                                                setFields([]);
+                                                setCsvFile(null);
+                                                setCsvData([]);
+                                                setCsvColumns([]);
+                                                setPreviewMode(false);
+                                                setPreviewIndex(0);
+                                                setStatus('');
+                                                showSnackbar({ message: 'Projects reset successfully!', type: 'success' });
+                                            }
+                                        });
+                                    }}
+                                >
+                                    🔄 Reset / Start Over
+                                </button>
+
                                 {status && (
                                     <div className={`status-message ${status.includes('Error') ? 'error' : 'success'}`}>
                                         {status}
@@ -363,6 +437,41 @@ function CertificateDesigner() {
                     </div>
                 </div>
             </footer>
+
+            {/* Snackbar */}
+            {snackbar.open && (
+                <div className={`snackbar ${snackbar.type}`}>
+                    <div className="snackbar-content">
+                        {snackbar.message}
+                        {snackbar.action}
+                    </div>
+                    {/* Close button for non-confirm types */}
+                    {snackbar.type !== 'confirm' && (
+                        <button
+                            className="btn-snackbar-close"
+                            onClick={() => setSnackbar(prev => ({ ...prev, open: false }))}
+                        >
+                            ✕
+                        </button>
+                    )}
+                    {snackbar.type === 'confirm' && (
+                        <div className="snackbar-actions">
+                            <button
+                                className="btn-confirm-yes"
+                                onClick={() => snackbar.onConfirm && snackbar.onConfirm()}
+                            >
+                                Yes, Reset
+                            </button>
+                            <button
+                                className="btn-confirm-no"
+                                onClick={() => setSnackbar({ ...snackbar, open: false })}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }
