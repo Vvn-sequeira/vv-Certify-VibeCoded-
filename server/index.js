@@ -202,10 +202,15 @@ app.post('/api/generate-visual', upload.any(), async (req, res) => {
             return res.status(400).send('CSV file is empty.');
         }
 
-        // Launch Puppeteer
+        // Launch Puppeteer with robust args for Render
         browser = await puppeteer.launch({
             headless: 'new',
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            args: [
+                '--no-sandbox', 
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu'
+            ]
         });
 
         // Setup Archive
