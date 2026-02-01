@@ -1,22 +1,28 @@
-FROM ghcr.io/puppeteer/puppeteer:19.11.1
+FROM ghcr.io/puppeteer/puppeteer:latest
 
-# Skip downloading Chrome because we use the installed one
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+# Set cache dir to a folder pptruser owns
+ENV PUPPETEER_CACHE_DIR=/home/pptruser/.cache/puppeteer
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-# Switch to root to install deps and fix permissions
+
+# Switch to root to install dependencies and fix permissions
 USER root
+
+# Install dependencies (this will download correct Chrome version)
 RUN npm ci
 
+# Copy all source files
 COPY . .
 
-# Create uploads folder and grant full read/write permissions
-RUN mkdir -p uploads && chmod -R 777 uploads
+# Create uploads folder
+RUN mkdir -p uploads
 
-# Switch back to non-root user
+# Grant ownership of EVERYTHING to pptruser so it can read/write freely
+RUN chown -R pptruser:pptruser /usr/src/app
+
+# Switch back to the correct user
 USER pptruser
 
 CMD [ "node", "index.js" ]
